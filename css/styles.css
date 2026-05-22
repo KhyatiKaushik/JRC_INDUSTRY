@@ -447,12 +447,14 @@ section {
 }
 
 .project-card {
-    background: var(--bg-light);
+    background: var(--white);
     padding: 2rem;
     border-radius: var(--border-radius);
     box-shadow: 0 5px 15px var(--shadow);
     transition: var(--transition);
-    border-left: 4px solid var(--accent-color);
+    border: 1px solid #d9ddcf;
+    border-top: 4px solid var(--secondary-color);
+    text-align: center;
 }
 
 .project-card:hover {
