@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }, observerOptions);
 
     // Observe elements for animation
-    const animateElements = document.querySelectorAll('.product-card, .service-card, .info-card, .stat, .about-content, .section-header');
+    const animateElements = document.querySelectorAll('.product-card, .service-card, .project-card, .info-card, .stat, .about-content, .section-header');
     animateElements.forEach(el => {
         observer.observe(el);
     });
