@@ -364,7 +364,7 @@ document.addEventListener('DOMContentLoaded', function() {
     Defense Ammunition Solutions Provider
     
     Website developed with modern web technologies
-    Contact: info@jrcindustries.com
+    Contact: jrc.heps22@gmail.com | rpsharmaK_51@yahoo.in
     `);
 });
 

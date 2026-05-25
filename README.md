@@ -141,9 +141,10 @@ The website uses CSS custom properties for easy color customization. Main colors
 ## Contact Information
 
 **JRC Industries Consultancy & Limited**
-- Address: Defence Enclave, Merrut, Uttar pradesh
+- Address (Registered): H.no 4-7-17/7 Flat no 309, Concrete Opus Apt., Ravindra Nagar, Nacharam, Uppal- KV Rangareddy, Pin 500076
+- Alternate Address: C-167, Defence Enclave, Meerut UP 250001
 - Phone: +91-888-888-3263
-- Email: info@jrcindustries.com
+- Email: jrc.heps22@gmail.com, rpsharmaK_51@yahoo.in
 - Website: [Your Domain]
 
 ## License
