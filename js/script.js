@@ -77,20 +77,61 @@ document.addEventListener('DOMContentLoaded', function() {
         observer.observe(el);
     });
 
-    // Contact Form Handling
+    // Contact Form Handling (use fetch to POST to Web3Forms and surface errors)
     const contactForm = document.querySelector('.contact-form');
     if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
-            // Get form data
+        contactForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn ? submitBtn.textContent : null;
+
+            // Collect form data and validate
             const formData = new FormData(this);
             const formObject = {};
             formData.forEach((value, key) => {
                 formObject[key] = value;
             });
 
-            // Basic form validation; allow native submission when valid
             if (!validateForm(formObject)) {
-                e.preventDefault();
+                return;
+            }
+
+            if (submitBtn) {
+                submitBtn.textContent = 'Sending...';
+                submitBtn.disabled = true;
+            }
+
+            try {
+                const response = await fetch(this.action, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                // Try parse JSON, otherwise fallback to text
+                let result;
+                try {
+                    result = await response.json();
+                } catch (err) {
+                    result = { success: response.ok, message: response.statusText };
+                }
+
+                if (response.ok && result && (result.success === true || result.success === 'true')) {
+                    showNotification('Message sent successfully! Check your inbox.', 'success');
+                    this.reset();
+                } else {
+                    const msg = (result && result.message) ? result.message : 'Submission failed, check Web3Forms settings.';
+                    showNotification(msg, 'error');
+                    console.error('Web3Forms response:', result);
+                }
+            } catch (err) {
+                showNotification('Network error: ' + err.message, 'error');
+                console.error(err);
+            } finally {
+                if (submitBtn) {
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                }
             }
         });
     }
