@@ -77,65 +77,6 @@ document.addEventListener('DOMContentLoaded', function() {
         observer.observe(el);
     });
 
-    // Contact Form Handling (use fetch to POST to Web3Forms and surface errors)
-    const contactForm = document.querySelector('.contact-form');
-    if (contactForm) {
-        contactForm.addEventListener('submit', async function(e) {
-            e.preventDefault();
-
-            const submitBtn = this.querySelector('button[type="submit"]');
-            const originalText = submitBtn ? submitBtn.textContent : null;
-
-            // Collect form data and validate
-            const formData = new FormData(this);
-            const formObject = {};
-            formData.forEach((value, key) => {
-                formObject[key] = value;
-            });
-
-            if (!validateForm(formObject)) {
-                return;
-            }
-
-            if (submitBtn) {
-                submitBtn.textContent = 'Sending...';
-                submitBtn.disabled = true;
-            }
-
-            try {
-                const response = await fetch(this.action, {
-                    method: 'POST',
-                    body: formData
-                });
-
-                // Try parse JSON, otherwise fallback to text
-                let result;
-                try {
-                    result = await response.json();
-                } catch (err) {
-                    result = { success: response.ok, message: response.statusText };
-                }
-
-                if (response.ok && result && (result.success === true || result.success === 'true')) {
-                    showNotification('Message sent successfully! Check your inbox.', 'success');
-                    this.reset();
-                } else {
-                    const msg = (result && result.message) ? result.message : 'Submission failed, check Web3Forms settings.';
-                    showNotification(msg, 'error');
-                    console.error('Web3Forms response:', result);
-                }
-            } catch (err) {
-                showNotification('Network error: ' + err.message, 'error');
-                console.error(err);
-            } finally {
-                if (submitBtn) {
-                    submitBtn.textContent = originalText;
-                    submitBtn.disabled = false;
-                }
-            }
-        });
-    }
-
     // Form Validation Function
     function validateForm(data) {
         const errors = [];
@@ -391,7 +332,7 @@ document.addEventListener('DOMContentLoaded', function() {
     Defense Ammunition Solutions Provider
     
     Website developed with modern web technologies
-    Contact: jrc.heps22@gmail.com | rpsharmaK_51@yahoo.in
+    Contact: info@jrcindustries.com
     `);
 });
 
