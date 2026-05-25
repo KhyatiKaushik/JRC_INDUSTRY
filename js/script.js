@@ -81,8 +81,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const contactForm = document.querySelector('.contact-form');
     if (contactForm) {
         contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
             // Get form data
             const formData = new FormData(this);
             const formObject = {};
@@ -90,21 +88,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 formObject[key] = value;
             });
 
-            // Basic form validation
-            if (validateForm(formObject)) {
-                // Show loading state
-                const submitBtn = this.querySelector('button[type="submit"]');
-                const originalText = submitBtn.textContent;
-                submitBtn.textContent = 'Sending...';
-                submitBtn.disabled = true;
-
-                // Simulate form submission (replace with actual API call)
-                setTimeout(() => {
-                    showNotification('Message sent successfully! We\'ll get back to you soon.', 'success');
-                    this.reset();
-                    submitBtn.textContent = originalText;
-                    submitBtn.disabled = false;
-                }, 2000);
+            // Basic form validation; allow native submission when valid
+            if (!validateForm(formObject)) {
+                e.preventDefault();
             }
         });
     }
