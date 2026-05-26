@@ -208,6 +208,47 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // Contact Form Submission
+    const contactForm = document.querySelector('.contact-form');
+    if (contactForm) {
+        contactForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const submitButton = contactForm.querySelector('button[type="submit"]');
+            const originalButtonText = submitButton.textContent;
+            const formData = new FormData(contactForm);
+            const data = Object.fromEntries(formData.entries());
+
+            if (!validateForm(data)) {
+                return;
+            }
+
+            submitButton.disabled = true;
+            submitButton.textContent = 'Sending...';
+
+            try {
+                const response = await fetch(contactForm.action, {
+                    method: 'POST',
+                    body: formData
+                });
+                const result = await response.json();
+
+                if (response.ok && result.success) {
+                    showNotification('Thank you. Your message has been sent successfully.', 'success');
+                    contactForm.reset();
+                } else {
+                    const message = result.message || 'Unable to send your message. Please email us directly.';
+                    showNotification(message, 'error');
+                }
+            } catch (error) {
+                showNotification('Unable to send your message right now. Please email us directly at jrc.heps22@gmail.com.', 'error');
+            } finally {
+                submitButton.disabled = false;
+                submitButton.textContent = originalButtonText;
+            }
+        });
+    }
+
     // Counter Animation for Stats
     function animateCounters() {
         const counters = document.querySelectorAll('.stat h4');
